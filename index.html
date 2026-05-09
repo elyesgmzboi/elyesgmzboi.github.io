@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    
+    <script src="script.js"></script>
     
 </head>
-<body onload="videoswitch()">
+<body onload="toggleMode(); videoswitch()">
 <div class="video-container">
   <video id="video1" autoplay muted loop class="bgvid1">
     <source src="video/wavy.mp4" type="video/mp4">
@@ -25,12 +25,12 @@
         <nav class="navbar">
             <div class="logo">MyPortfolio</div>
             <ul class="nav-links">
-                <li><a href="https://elyesishere.github.io/elyesgmzboi.github.io/#about">About Me</a></li>
-                <li><a href="https://elyesishere.github.io/elyesgmzboi.github.io/#skills">Skills</a></li>
-                <li><a href="https://elyesishere.github.io/elyesgmzboi.github.io/#contact">Contact</a></li>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
                 
                 <li title="Switch to dark mode/Light mode">
-                    <input type="checkbox" id="dark-mode-toggle" class="toggle-checkbox" title="Switch to Dark Mode/Light Mode" onchange="videoswitch()">
+                    <input type="checkbox" id="dark-mode-toggle" class="toggle-checkbox" title="Switch to Dark Mode/Light Mode" onchange="toggleMode(); videoswitch()">
                     <label for="dark-mode-toggle" class="toggle-label">
                         <span class="icon-moon">☀️</span>
                         <span class="icon-sun">🌙</span>
@@ -51,10 +51,10 @@
         <div class="content-box">
             <h2>My Skills</h2>
             <ul class="skills-list">
-                <li>HTML5</li>
-                <li>CSS3</li>
-                <li>JavaScript</li>
-                <li>Git &amp; GitHub</li>
+                <li>🖥️ HTML5</li>
+                <li>🎨 CSS3</li>
+                <li>⚡ JavaScript</li>
+                <li>📚 Git & GitHub</li>
             </ul>
         </div>
     </section>
@@ -62,20 +62,20 @@
     <section id="contact" class="section-container">
         <div class="content-box">
             <h2>Contact Me</h2>
-            <form class="contact-form" action="https://elyesishere.github.io/elyesgmzboi.github.io/#" method="POST">
+            <form class="contact-form" action="#" method="POST">
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Example G. Example" required="">
+                    <input type="text" id="name" name="name" placeholder="Example G. Example" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" placeholder="Example@Example.com" required="">
+                    <input type="text" id="email" name="email" placeholder="Example@Example.com" required>
                 </div>
-                <button type="submit" class="btn-submit">Send Message</button>
+                <button type="submit" class="btn-submit" onclick="checkForm()">Send Message</button>
             </form>
         </div>
     </section>
 
     <footer>
-        <p>© 2025/2026 My Portfolio. Built with HTML &amp; CSS.</p>
+        <p>© 2025/2026 My Portfolio. Built with HTML & CSS.</p>
     </footer>

@@ -40,21 +40,6 @@
 
  
 /*light mode*/
-body:has(.toggle-checkbox:checked) {
-    --bg-color: #ffffff;
-    --text-color: #3f3f3f;
-    --nav-bg: #333333;
-    --nav-text: #ffffff;
-    --alt-bg: #e3e3e3;
-    --accent-color: #3498db;
-    --input-bg: #ffffff;
-    --input-border: #ccc;
-    --background:  rgba(255, 255, 255, 0.048);
-    --border: 1px solid rgb(134, 134, 134);
-    
-    
-    
-}
 #about .content-box{
     text-align: center;
     
@@ -71,9 +56,8 @@ body:has(.toggle-checkbox:checked) {
 #about span{
     color: #3498db;
 }
-.content-box:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+.skills-blur {
+    backdrop-filter: blur(15px);
 }
 
 @keyframes fadeInSlideUp {
@@ -272,8 +256,13 @@ h1, h2 {
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
-    
+    animation: fadeInSlideUp 0.8s ease-out forwards;
+    opacity: 0;
 }
+.skills-list li:nth-child(1) { animation-delay: 0.1s; }
+.skills-list li:nth-child(2) { animation-delay: 0.2s; }
+.skills-list li:nth-child(3) { animation-delay: 0.3s; }
+.skills-list li:nth-child(4) { animation-delay: 0.4s; }
 .skills-list li:hover {
     transform: scale(1.15); 
     
