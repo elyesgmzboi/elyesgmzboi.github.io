@@ -5,8 +5,8 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="javascript/script.js"></script>
     
 </head>
 <body onload="toggleMode(); videoswitch()">
@@ -20,13 +20,12 @@
   
 </video>
 </div>
-<script src="script.js"></script>
     <header>
         <nav class="navbar">
             <div class="logo">MyPortfolio</div>
             <ul class="nav-links">
                 <li><a href="#about">About Me</a></li>
-                <li><a href="#skills">Skills</a></li>
+                <li><a href="#jsgames">JS Games</a></li>
                 <li><a href="#contact">Contact</a></li>
                 
                 <li title="Switch to dark mode/Light mode">
@@ -47,14 +46,14 @@
         </div>
     </section>
 
-    <section id="skills" class="section-container bg-alt">
+    <section id="jsgames" class="section-container bg-alt">
         <div class="content-box">
-            <h2>My Skills</h2>
-            <ul class="skills-list">
-                <li>🖥️ HTML5</li>
-                <li>🎨 CSS3</li>
-                <li>⚡ JavaScript</li>
-                <li>📚 Git & GitHub</li>
+            <h2>JS Games</h2>
+            <ul class="jsgames-list">
+                <li><button type="button" class="skill-btn" onclick="numberGuesser()">🎲 Number Guesser</button></li>
+                <li><button type="button" class="skill-btn" onclick="multiplicationQuiz()">✖️ Multiplication Quiz</button></li>
+                <li><button type="button" class="skill-btn" onclick="additionChallenge()">➕ Addition Challenge</button></li>
+                <li><button type="button" class="skill-btn" onclick="wordScramble()">🔤 Word Scramble</button></li>
             </ul>
         </div>
     </section>
