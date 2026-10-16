@@ -1,6 +1,6 @@
-# Ilyes
+# Elyes Zguem's portfolio
 
-Ilyes's portfolio, running on a recreation of the PlayStation 2 system menu: the startup scene, the main menu orbs,
+my portfolio, running on a recreation of the PlayStation 2 system menu: the startup scene, the main menu orbs,
 the memory card Browser (where the projects live) and System Configuration.
 
 Static site, no build step: open `index.html` through any web server. Everything the site says is in `content.js`.
