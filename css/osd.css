@@ -1,0 +1,140 @@
+@font-face {
+  font-family: OSD;
+  src: url(../assets/fonts/heros-regular.woff2) format('woff2');
+  font-display: block;
+  ascent-override: 100%; descent-override: 0%; line-gap-override: 0%;
+  -webkit-text-stroke: 8px black; /* Thick stroke */
+  paint-order: stroke fill; 
+}
+@font-face {
+  font-family: OSD;
+  font-weight: 700;
+  src: url(../assets/fonts/heros-bold.woff2) format('woff2');
+  font-display: block;
+  ascent-override: 100%; descent-override: 0%; line-gap-override: 0%;
+  -webkit-text-stroke: 8px black; /* Thick stroke */
+  paint-order: stroke fill; 
+}
+:root { --cy: #48c8f6; --yl: #c4cc08; --gr: #b3b3b3; --dim: #434343; }
+html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+body { font-family: OSD, Helvetica, Arial, sans-serif; color: var(--gr); -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; touch-action: none; cursor: default; }
+#gl { position: fixed; left: 0; top: 0; display: block; }
+#ui { position: fixed; left: 0; top: 0; width: 1440px; height: 1080px; transform-origin: 0 0; overflow: visible; pointer-events: none; filter: blur(.45px); }
+body.crt-on #ui { filter: blur(.62px) saturate(1.08); }
+#fx { position: fixed; inset: 0; z-index: 6; display: block; pointer-events: none; }
+.scr { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .32s linear, visibility 0s linear .32s; }
+.scr.on { opacity: 1; visibility: visible; transition: opacity .32s linear, visibility 0s; }
+.fast .scr, .fast .scr.on { transition-duration: .12s; }
+
+/* text */
+.tx { position: absolute; white-space: pre; letter-spacing: 4px; color: var(--gr); -webkit-text-stroke: .04em currentColor; text-shadow: 0 0 2px rgba(0,0,0,.8), 0 0 1px rgba(0,0,0,.9); transition: color .12s linear, opacity .25s linear; }
+body.crt-on #ui .tx { filter: blur(.55px); text-shadow: -2px 0 rgba(255,55,45,.42), 2px 0 rgba(55,145,255,.42), 0 0 4px currentColor, 0 0 2px rgba(0,0,0,.85); }
+.tx.L { font-size: 64px; } .tx.T { font-size: 53.5px; letter-spacing: 3.35px; } .tx.M { font-size: 48px; } .tx.I { font-size: 40px; } .tx.S { font-size: 36px; } .tx.XS { font-size: 30px; }
+.tx .ps2 { font-size: .62em; letter-spacing: 2px; }
+.tx i.sl { font-style: normal; margin: 0 .1em; }
+.tx i.co { font-style: normal; margin: 0 -.031em; }
+.cy { color: var(--cy) !important; }
+.yl { color: var(--yl) !important; }
+.dimt { color: var(--dim) !important; }
+.wh { color: #d6d6d6 !important; }
+.hide { opacity: 0 !important; }
+[data-hit] { cursor: pointer; pointer-events: auto; }
+
+/* hints */
+.hints { position: absolute; left: 0; top: 0; width: 1440px; height: 1080px; pointer-events: none; }
+.hint { position: absolute; top: 960px; height: 58px; cursor: pointer; pointer-events: auto; transition: opacity .2s linear; }
+.hint .bi { position: absolute; left: -12px; top: 2px; }
+.hint .tx { position: absolute; left: 58px; top: -2px; line-height: 48px; }
+.hint.dim { opacity: .38; }
+.hint:hover .tx { color: #e2e2e2; }
+svg.bi { overflow: visible; }
+
+/* misc glyphs */
+.updown { position: absolute; left: 1343px; top: 547px; fill: #a9a5ae; stroke: rgba(0,0,0,.55); stroke-width: 1.5px; filter: drop-shadow(0 0 1.5px rgba(0,0,0,.6)); transition: opacity .2s; }
+.sun { position: absolute; left: 1076.5px; top: 74.5px; color: #b3afb8; filter: drop-shadow(0 0 1.5px rgba(0,0,0,.7)); }
+.lr { position: absolute; fill: rgba(95,90,110,.55); transition: fill .08s; }
+.lr.flash { fill: #e6e6f0; }
+.more { position: absolute; left: 693px; fill: #1f2fd0; filter: drop-shadow(0 0 2px rgba(0,0,40,.5)); transition: opacity .2s; }
+.mcicon { position: absolute; left: 80px; top: 89px; }
+.br-title { letter-spacing: 6.2px; }
+.ps2logo { position: absolute; left: 50px; top: 76px; font: 700 66px/1 OSD; letter-spacing: 1px; color: transparent; -webkit-text-stroke: 2.2px rgba(214,214,214,.95); text-shadow: 2px 2px 0 rgba(40,40,40,.55), -1px -1px 0 rgba(255,255,255,.18); transform: scaleX(.79); transform-origin: 0 0; }
+
+/* power screen (not part of the console, just the switch) */
+#scr-power { background: #000; }
+#scr-power:not(.on) { transition: none; }   /* the console cuts straight to the first picture */
+.pw-con { position: absolute; left: 160px; top: 262px; width: 1120px; height: 347.2px; transition: opacity .5s linear; will-change: opacity; }
+.pw-con > svg { position: absolute; left: 0; top: 0; }
+.pw-ps2 { filter: drop-shadow(0 18px 30px rgba(0,0,0,.9)); will-change: transform; }
+.pw-lay { will-change: opacity; }
+.pw-led-g, .pw-led-b { opacity: 0; transition: opacity .18s linear; }
+.pw-led-r { transition: opacity .18s linear; }
+.pw-on .pw-led-r { opacity: 0; } .pw-on .pw-led-g { opacity: 1; } .pw-on .pw-led-b { opacity: 1; transition-delay: .15s; }
+.pw-on .pw-hint, .pw-on .pw-keys { animation: none; opacity: 0; transition: opacity .3s linear; }
+.pw-out .pw-con, .pw-out .pw-plain { opacity: 0; }
+.pw-hint { animation: pulse 2.4s ease-in-out infinite; }
+.pw-small { color: #6a6a6a; }
+.pw-small .pad { width: 34px; height: 34px; vertical-align: -5px; margin-right: 16px; fill: currentColor; }
+.pw-gap { display: inline-block; width: 64px; }
+.pw-plain { position: absolute; right: 52px; top: 48px; font: 30px/1 OSD; letter-spacing: 4px; color: #6a6a6a; text-decoration: none; pointer-events: auto; -webkit-text-stroke: .04em currentColor; }
+.pw-plain:hover, .pw-plain:focus { color: #b3b3b3; outline: none; }
+@keyframes pulse { 50% { opacity: .3; } }
+
+/* boot */
+.sce { font-size: 64.2px; font-weight: 400; letter-spacing: 0; color: #f4f4f4; -webkit-text-stroke: 2.2px currentColor; text-shadow: 0 0 1.5px rgba(255,255,255,.45); transition: none; }
+
+/* dialog */
+.dlg-dim { position: absolute; inset: 0; background: rgba(0,0,0,.55); opacity: 0; transition: opacity .25s; pointer-events: none; }
+.dlg-dim.on { opacity: 1; }
+
+/* diagnostics */
+#diag { position: fixed; left: 8px; top: 6px; font: 12px/1.2 ui-monospace, Consolas, monospace; color: #7f7; text-shadow: 0 0 2px #000; pointer-events: none; z-index: 5; white-space: pre; }
+
+/* accessible text version */
+.sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.sr:focus-within { position: fixed !important; inset: 0; width: auto; height: auto; overflow: auto; clip: auto; white-space: normal; background: #000; color: #ddd; padding: 32px; z-index: 10; font: 18px/1.5 system-ui, sans-serif; }
+#rotate { display: none; }
+@media (orientation: portrait) and (max-width: 700px) {
+  #rotate { display: block; position: fixed; left: 0; right: 0; bottom: 18px; text-align: center; font: 13px/1.3 OSD, sans-serif; letter-spacing: 1px; color: #666; pointer-events: none; }
+}
+.layer { position: absolute; inset: 0; transition: opacity .25s linear; }
+
+/* System Configuration */
+.scr.quick, .scr.quick.on { transition-duration: .1s; }
+.scr.slow-in.on { transition-duration: 1.3s; }
+.scr.slow-out { transition-duration: .7s, 0s; transition-delay: 0s, .7s; }
+/* back from a card (capture 126.69): the title returns at +0.41 s, the PS2 mark and the hints at +0.6 s */
+.br-back .ps2logo, .br-back .hints, .br-back .tx.yl { opacity: 0; transition: none; }
+/* back from a card (capture: Back 126.69, card returns 127.117): the title is up as the card starts back, the "PS2"
+   mark follows at +0.17 s and the hints at +0.36 s */
+.br-back-run .tx.yl { opacity: 1; transition: opacity .1s linear; }
+.br-back-run .ps2logo { opacity: 1; transition: opacity .15s linear .17s; }
+.br-back-run .hints { opacity: 1; transition: opacity .12s linear .36s; }
+/* a card's saves arriving (capture 114.75): the header icon grows from a point, the card's name follows */
+.mcicon.grow-in { transform-origin: 31px 32px; animation: br-grow .2s ease-out both; }
+@keyframes br-grow { from { transform: scale(.05); } to { transform: scale(1); } }
+.br-load .tx.later { animation: br-fade .2s linear .3s both; }
+@keyframes br-fade { from { opacity: 0; } to { opacity: 1; } }
+.hints { transition: opacity .12s linear; }
+.cfg-body { position: absolute; inset: 0; transition: opacity .2s linear; }
+.cfg-body.gone { opacity: 0; }
+.cfg-body > .tx.yl, .cfg-slot { transition: opacity .15s linear; }
+.cfg-body.swap > .tx.yl, .cfg-body.swap .cfg-slot { opacity: 0; }
+.cfg-pair { position: absolute; inset: 0; transition: opacity .25s linear; }
+.cfg-ud, .cfg-lr, .cfg-fa { opacity: 0; }
+.cfg-ud .updown { fill: #bdbac2; }
+.cfg-ud.on, .cfg-lr.on, .cfg-fa.on { animation: osdpulse 2s ease-in-out infinite; }
+@keyframes osdpulse { 0%, 100% { opacity: .04; } 50% { opacity: 1; } }
+.cfg-lr { position: absolute; top: 641px; width: 22px; height: 40px; fill: #efebf5; filter: drop-shadow(0 0 1.5px rgba(0,0,0,.6)); }
+.cfg-lr.on { pointer-events: auto; cursor: pointer; }
+.cfg-l { left: 748px; } .cfg-r { left: 1188px; }
+.cfg-fa { position: absolute; width: 26px; height: 15px; fill: #efebf5; filter: drop-shadow(0 0 1.5px rgba(0,0,0,.6)); }
+.cfg-clip { position: absolute; left: 772px; top: 596px; width: 414px; height: 120px; overflow: hidden; }
+.cfg-clip.moving { opacity: .62; }
+.cfg-pair span[data-hit] { cursor: pointer; pointer-events: auto; }
+
+/* Screen Size crossfade */
+.ghost { position: fixed; inset: 0; z-index: 4; pointer-events: none; opacity: 1; transition: opacity .25s linear; }
+.ghost.out { opacity: 0; }
+.ghost canvas { position: absolute; left: 0; top: 0; }
+.ghost-ui { position: absolute; left: 0; top: 0; width: 1440px; height: 1080px; transform-origin: 0 0; filter: blur(.45px); }
+.ghost-ui, .ghost-ui * { pointer-events: none !important; }

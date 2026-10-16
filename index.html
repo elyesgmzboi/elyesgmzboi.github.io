@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Elyes zguem's portfolio</title>
+<meta name="description" content="Elyes's portfolio, running on a recreation of the PlayStation 2 system menu.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=2">
+<link rel="preload" href="assets/fonts/heros-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/osd.css?v=292fa65fbd">
+<script type="importmap">{"imports": {"three": "./js/lib/three.js?v=c83d7c267d", "./js/audio.js": "./js/audio.js?v=7f3d4dd5ab", "./js/boot.js": "./js/boot.js?v=cc4ab18ff3", "./js/browser.js": "./js/browser.js?v=944e98da15", "./js/cfgworld.js": "./js/cfgworld.js?v=0c46e45c01", "./js/config.js": "./js/config.js?v=62fc7280f2", "./js/dialog.js": "./js/dialog.js?v=518c6e1207", "./js/disc.js": "./js/disc.js?v=d0231f6e91", "./js/gsfx.js": "./js/gsfx.js?v=45b5e10f76", "./js/i18n.js": "./js/i18n.js?v=83e22166a1", "./js/input.js": "./js/input.js?v=d94b48eef8", "./js/main.js": "./js/main.js?v=8cf35e91d7", "./js/menu.js": "./js/menu.js?v=35d9cfbea4", "./js/orbs.js": "./js/orbs.js?v=8d3b10f10b", "./js/osdclock.js": "./js/osdclock.js?v=8ad136dbb2", "./js/screen.js": "./js/screen.js?v=a09ad6a168", "./js/settings.js": "./js/settings.js?v=bf5e9637ae", "./js/stage.js": "./js/stage.js?v=de305e1c76", "./js/tex.js": "./js/tex.js?v=9693ca7665", "./js/ui.js": "./js/ui.js?v=1e950e847d"}}</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="bhalo"><stop offset="0" stop-color="#131317"/><stop offset=".8" stop-color="#131317"/><stop offset=".9" stop-color="#131317" stop-opacity=".55"/><stop offset="1" stop-color="#131317" stop-opacity="0"/></radialGradient>
+  </defs>
+</svg>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div id="ui" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div id="rotate">Rotate your device for the full picture</div>
+<main id="plain" class="sr"></main>
+<noscript><div style="position:fixed;inset:0;display:grid;place-items:center;color:#aaa;font:16px sans-serif;text-align:center;padding:2em">This portfolio boots a PlayStation&nbsp;2 style menu and needs JavaScript and WebGL.</div></noscript>
+<script src="content.js?v=90eb82ac0c"></script>
+<script type="module" src="js/main.js?v=8cf35e91d7"></script>
+</body>
+</html>
