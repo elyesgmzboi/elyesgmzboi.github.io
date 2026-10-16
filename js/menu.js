@@ -380,7 +380,7 @@ export class VersionScreen extends Screen {
       const b = tx(s, { x: 1040, y, a: 'l', size: 'M', html: vals ? t(vals.find((v) => v[0] === S[it.key])[1]) : it.value || '' });
       a.dataset.hit = b.dataset.hit = 's' + i;
       let opts = null;
-      if (vals) opts = vals.map((v, j) => { const o = tx(s, { x: 1040, y: y + j * 53, a: 'l', size: 'M', html: t(v[1]) }); o.style.opacity = 0; o.dataset.hit = 'v' + j; return o; });
+      if (vals) opts = vals.map((v, j) => { const o = tx(s, { x: 1040, y: y + j * 53, a: 'l', size: 'M', html: t(v[1]) }); o.style.opacity = 0; o.style.pointerEvents = 'none'; o.dataset.hit = 'v' + j; return o; });
       return { a, b, it, opts };
     });
     this.hintsSub = hints(s, [['x', 'enter'], ['o', 'back']], (b) => this.key(b));
@@ -393,7 +393,7 @@ export class VersionScreen extends Screen {
       a.className = a.className.replace(/ ?(cy|wh|dimt)/g, '') + (on ? (ed ? ' wh' : ' cy') : ' dimt');
       b.style.opacity = ed ? 0 : 1;
       b.className = b.className.replace(/ ?(cy|wh|dimt)/g, '') + (on ? '' : ' dimt');
-      if (opts) opts.forEach((o, j) => { o.style.opacity = ed ? 1 : 0; o.className = o.className.replace(/ ?(cy|wh|dimt)/g, '') + (ed && j === this.optSel ? ' cy' : ' dimt'); });
+      if (opts) opts.forEach((o, j) => { o.style.opacity = ed ? 1 : 0; o.style.pointerEvents = ed ? 'auto' : 'none'; o.className = o.className.replace(/ ?(cy|wh|dimt)/g, '') + (ed && j === this.optSel ? ' cy' : ' dimt'); });
       // rows under an open option list make room for it
       if (i > this.subSel && this.editing) { a.style.opacity = b.style.opacity = 0.0; } else if (!ed) { a.style.opacity = 1; }
     });
@@ -404,7 +404,7 @@ export class VersionScreen extends Screen {
     this.subMenu = null; this.sel = 0;
     this.main.innerHTML = ''; this.buildMain();
     this.sub.innerHTML = '';
-    this.main.style.opacity = 1;
+    this.main.style.opacity = 1; this.main.style.pointerEvents = '';
     app.orbs.set({ mode: 'arc', x: 619, y: 545.5, alpha: 1, merge: 0, scatter: 1 }, 2.4);
     this.show(false); app.after(260, () => this.show(true));
     return 'hold';
@@ -459,7 +459,7 @@ export class VersionScreen extends Screen {
   openSub(menu) {
     const app = this.app;
     this.subMenu = menu; this.subSel = 0; this.editing = false;
-    this.main.style.transition = 'opacity .25s'; this.main.style.opacity = 0;
+    this.main.style.transition = 'opacity .25s'; this.main.style.opacity = 0; this.main.style.pointerEvents = 'none';
     app.orbs.set({ x: 520, y: 650.5, merge: 0.7 }, 2.5);
     app.lock(300);
     app.after(260, () => { this.buildSub(); this.sub.style.opacity = 1; });
@@ -467,8 +467,9 @@ export class VersionScreen extends Screen {
   closeSub() {
     const app = this.app;
     this.sub.innerHTML = ''; this.subMenu = null;
+    this.main.style.pointerEvents = 'none';
     app.orbs.set({ x: 619, y: 545.5, merge: 0 }, 2.4);
-    app.after(200, () => { this.buildMain(); this.main.style.opacity = 1; });
+    app.after(200, () => { this.buildMain(); this.main.style.opacity = 1; this.main.style.pointerEvents = ''; });
   }
   hit(v, kind) {
     if (!this.subMenu) {

@@ -53,7 +53,28 @@ export function hints(parent, list, onPress) {
     h.dataset.btn = b;
     const label = (opts && opts.label) || t(key);
     h.innerHTML = btnSVG(b) + `<span class="tx M">${label}</span>`;
-    h.addEventListener('click', (e) => { e.stopPropagation(); onPress && onPress(b); });
+    let touchStart = null, suppressClickUntil = 0;
+    h.addEventListener('pointerdown', (e) => {
+      suppressClickUntil = 0;
+      if (e.pointerType === 'touch') touchStart = { id: e.pointerId, x: e.clientX, y: e.clientY };
+    });
+    h.addEventListener('pointerup', (e) => {
+      if (!touchStart || touchStart.id !== e.pointerId) return;
+      const moved = Math.hypot(e.clientX - touchStart.x, e.clientY - touchStart.y);
+      touchStart = null;
+      suppressClickUntil = performance.now() + 750;
+      if (moved > 12) return;
+      e.stopPropagation();
+      onPress && onPress(b);
+    });
+    h.addEventListener('pointercancel', (e) => {
+      if (touchStart && touchStart.id === e.pointerId) touchStart = null;
+    });
+    h.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (performance.now() < suppressClickUntil) { suppressClickUntil = 0; return; }
+      onPress && onPress(b);
+    });
     const w = 58 + measure(label);
     const x = b === 't' ? Math.max(1384 + TRACK - w, lastRight + 34) : Math.max(SLOT[b], lastRight + 34);
     h.style.left = x + 'px'; h.style.width = w + 'px';

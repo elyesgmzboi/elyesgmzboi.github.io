@@ -387,6 +387,7 @@ export class ConfigScreen extends Screen {
     this.lArrow.dataset.hit = 'left'; this.rArrow.dataset.hit = 'right';
     this.fieldUp = el('div', 'cfg-fa', '<svg viewBox="0 0 26 15" width="26" height="15"><path d="M13 0 26 15H0Z"/></svg>', this.body);
     this.fieldDn = el('div', 'cfg-fa', '<svg viewBox="0 0 26 15" width="26" height="15"><path d="M13 15 26 0H0Z"/></svg>', this.body);
+    this.fieldUp.dataset.hit = 'fieldUp'; this.fieldDn.dataset.hit = 'fieldDn';
     this.fieldUp.style.top = '614px'; this.fieldDn.style.top = '700px';
     this.hintRow = el('div', 'layer', null, r);
     this.list = this.page === 'clockOpts' ? clockItems() : items();
@@ -587,7 +588,7 @@ export class ConfigScreen extends Screen {
     } else if (ed.kind === 'carousel') {
       this.slide(htmlOf(it.opts[ed.idx][1]), dir);
     } else {
-      const f = ed.f, sp = (i, s) => `<span class="${i === ed.field ? 'cy' : ''}" data-f="${i}">${s}</span>`;
+      const f = ed.f, sp = (i, s) => `<span class="${i === ed.field ? 'cy' : ''}" data-hit="f${i}" data-f="${i}">${s}</span>`;
       const dparts = { y: sp(0, f[0]), mo: sp(1, pad(f[1])), d: sp(2, pad(f[2])) };
       const order = S.dateFmt === 'mdy' ? ['mo', 'd', 'y'] : S.dateFmt === 'dmy' ? ['d', 'mo', 'y'] : ['y', 'mo', 'd'];
       const sl = '<i class="sl">/</i>', co = '<i class="co">:</i>';
@@ -704,6 +705,16 @@ export class ConfigScreen extends Screen {
     if (kind !== 'click') return;
     if (this.mode === 'display') { this.key('s'); return; }
     if (v === 'left' || v === 'right') { this.key(v); return; }
+    if (this.edit && this.edit.kind === 'clock' && /^f\d$/.test(v)) {
+      const field = +v.slice(1);
+      if (field >= 0 && field < this.edit.f.length && field !== this.edit.field) {
+        this.edit.field = field; sfx('cursor'); this.renderEdit();
+      }
+      return;
+    }
+    if (this.edit && this.edit.kind === 'clock' && (v === 'fieldUp' || v === 'fieldDn')) {
+      this.editKey(v === 'fieldUp' ? 'up' : 'down'); return;
+    }
     if (v[0] === 'o' && this.edit && this.edit.kind === 'row') {
       const i = +v.slice(1), ed = this.edit;
       if (i === ed.idx) { this.key('x'); return; }

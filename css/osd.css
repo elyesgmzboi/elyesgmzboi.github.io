@@ -23,6 +23,7 @@ body { font-family: OSD, Helvetica, Arial, sans-serif; color: var(--gr); -webkit
 body.crt-on #ui { filter: blur(.62px) saturate(1.08); }
 #fx { position: fixed; inset: 0; z-index: 6; display: block; pointer-events: none; }
 .scr { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .32s linear, visibility 0s linear .32s; }
+.scr:not(.on) * { pointer-events: none !important; }
 .scr.on { opacity: 1; visibility: visible; transition: opacity .32s linear, visibility 0s; }
 .fast .scr, .fast .scr.on { transition-duration: .12s; }
 
@@ -124,10 +125,11 @@ svg.bi { overflow: visible; }
 .cfg-ud .updown { fill: #bdbac2; }
 .cfg-ud.on, .cfg-lr.on, .cfg-fa.on { animation: osdpulse 2s ease-in-out infinite; }
 @keyframes osdpulse { 0%, 100% { opacity: .04; } 50% { opacity: 1; } }
-.cfg-lr { position: absolute; top: 641px; width: 22px; height: 40px; fill: #efebf5; filter: drop-shadow(0 0 1.5px rgba(0,0,0,.6)); }
+.cfg-lr { position: absolute; top: 641px; width: 22px; height: 40px; fill: #efebf5; filter: drop-shadow(0 0 1.5px rgba(0,0,0,.6)); pointer-events: none; }
 .cfg-lr.on { pointer-events: auto; cursor: pointer; }
 .cfg-l { left: 748px; } .cfg-r { left: 1188px; }
-.cfg-fa { position: absolute; width: 26px; height: 15px; fill: #efebf5; filter: drop-shadow(0 0 1.5px rgba(0,0,0,.6)); }
+.cfg-fa { position: absolute; width: 26px; height: 15px; fill: #efebf5; filter: drop-shadow(0 0 1.5px rgba(0,0,0,.6)); pointer-events: none; }
+.cfg-fa.on { pointer-events: auto; cursor: pointer; }
 .cfg-clip { position: absolute; left: 772px; top: 596px; width: 414px; height: 120px; overflow: hidden; }
 .cfg-clip.moving { opacity: .62; }
 .cfg-pair span[data-hit] { cursor: pointer; pointer-events: auto; }

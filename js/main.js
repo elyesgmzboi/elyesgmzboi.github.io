@@ -48,6 +48,36 @@ class App {
     }
     this.dialog = new Dialog(this);
     this.input = new Input((b, rep, src) => this.onButton(b, rep, src));
+    this.touchTarget = null;
+    this.suppressTouchClick = null;
+    document.addEventListener('pointerdown', (e) => {
+      this.suppressTouchClick = null;
+      if (e.pointerType !== 'touch') return;
+      const hit = e.target.closest && e.target.closest('#ui [data-hit]');
+      const canvas = e.target === this.stage.canvas;
+      this.touchTarget = hit || canvas ? { id: e.pointerId, hit, canvas, x: e.clientX, y: e.clientY } : null;
+    });
+    document.addEventListener('pointerup', (e) => {
+      const touch = this.touchTarget;
+      if (!touch || touch.id !== e.pointerId) return;
+      this.touchTarget = null;
+      const suppressClick = () => { this.suppressTouchClick = { until: performance.now() + 750 }; };
+      if (Math.hypot(e.clientX - touch.x, e.clientY - touch.y) > 12) { suppressClick(); return; }
+      const target = document.elementFromPoint(e.clientX, e.clientY);
+      if (touch.canvas) {
+        if (target !== this.stage.canvas) { suppressClick(); return; }
+        this.onCanvasHit(e);
+        suppressClick();
+        return;
+      }
+      const hit = target && target.closest('[data-hit]');
+      if (hit !== touch.hit) { suppressClick(); return; }
+      this.onHit(e, 'click', hit);
+      suppressClick();
+    });
+    document.addEventListener('pointercancel', (e) => {
+      if (this.touchTarget && this.touchTarget.id === e.pointerId) this.touchTarget = null;
+    });
     this.ui.addEventListener('click', (e) => this.onHit(e, 'click'));
     this.ui.addEventListener('pointerover', (e) => this.onHit(e, 'hover'));
     document.addEventListener('pointermove', (e) => this.cur && this.cur.hoverCanvas && this.cur.hoverCanvas(e));
@@ -55,9 +85,9 @@ class App {
       if (!e.relatedTarget && this.cur && this.cur.hoverCanvas) this.cur.hoverCanvas(null);
     });
     window.addEventListener('blur', () => this.cur && this.cur.hoverCanvas && this.cur.hoverCanvas(null));
-    document.getElementById('gl').addEventListener('click', (e) => {
-      if (this.cur && this.cur.hitCanvas && this.cur.hitCanvas(e)) return;
-      this.onButton('any', false, 'mouse');
+    this.stage.canvas.addEventListener('click', (e) => {
+      if (this.consumeTouchClick()) return;
+      this.onCanvasHit(e);
     });
     this.diag = null; this.applyDiag();
     this.applySpeed();
@@ -114,8 +144,21 @@ class App {
     this.cur && this.cur.key(b, rep, src);
   }
 
-  onHit(e, kind) {
-    const h = e.target.closest('[data-hit]');
+  onCanvasHit(e) {
+    if (this.cur && this.cur.hitCanvas && this.cur.hitCanvas(e)) return;
+    this.onButton('any', false, e.pointerType === 'touch' ? 'touch' : 'mouse');
+  }
+
+  consumeTouchClick() {
+    if (!this.suppressTouchClick) return false;
+    const { until } = this.suppressTouchClick;
+    this.suppressTouchClick = null;
+    return performance.now() <= until;
+  }
+
+  onHit(e, kind, target = e.target) {
+    if (kind === 'click' && this.consumeTouchClick()) return;
+    const h = target.closest('[data-hit]');
     if (kind === 'click' && !this.powered) { this.onButton('any', false, 'mouse'); return; }
     if (!h) return;
     if (kind === 'click') initAudio();
